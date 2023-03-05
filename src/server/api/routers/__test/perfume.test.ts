@@ -1,7 +1,9 @@
-import { type inferProcedureInput } from "@trpc/server";
+import {
+  type inferProcedureOutput,
+  type inferProcedureInput,
+} from "@trpc/server";
 import { appRouter, type AppRouter } from "~/server/api/root";
 import { UserRole } from "~/server/auth";
-import { type Perfume } from "@prisma/client";
 import cuid from "cuid";
 import { prismaMock } from "~/server/prismaMock";
 import { type Session } from "next-auth";
@@ -27,11 +29,17 @@ describe("Perfume Router Tests", () => {
       session: null,
       prisma: prismaMock,
     });
-    const mockOutput: Perfume[] = [
+    type Output = inferProcedureOutput<AppRouter["perfume"]["getAll"]>;
+    const mockOutput: Output = [
       {
         id: cuid(),
         name: "YSL Y EDP",
         brandId: cuid(),
+        brand: {
+          id: cuid(),
+          name: "YSL",
+          logo: "test logo url",
+        },
         batchCode: "12345",
         image: "test image url",
       },
@@ -39,6 +47,11 @@ describe("Perfume Router Tests", () => {
         id: cuid(),
         name: "Sauvage EDP",
         brandId: cuid(),
+        brand: {
+          id: cuid(),
+          name: "Dior",
+          logo: "test logo url",
+        },
         batchCode: "12345",
         image: "test image url",
       },
@@ -48,6 +61,7 @@ describe("Perfume Router Tests", () => {
 
     expect(res).toHaveLength(mockOutput.length);
     expect(res).toStrictEqual(mockOutput);
+    expect(res && res[0]).toHaveProperty("brand");
   }),
     it("should create a perfume", async () => {
       type Input = inferProcedureInput<AppRouter["perfume"]["createPerfume"]>;

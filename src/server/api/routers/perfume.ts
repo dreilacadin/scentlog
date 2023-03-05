@@ -8,7 +8,11 @@ export const perfumeRouter = createTRPCRouter({
     .meta({ description: "List all perfumes" })
     .query(async ({ ctx }) => {
       try {
-        return await ctx.prisma.perfume.findMany();
+        return await ctx.prisma.perfume.findMany({
+          include: {
+            brand: true,
+          },
+        });
       } catch (error) {
         errorHandler(error);
       }
