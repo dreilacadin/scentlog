@@ -61,6 +61,7 @@ export const perfumeRouter = createTRPCRouter({
               },
             },
             batchCode: input.name,
+            image: input.image,
             owners: {
               connect: {
                 id: user.id,

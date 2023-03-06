@@ -90,6 +90,8 @@ describe("Perfume Router Tests", () => {
       expect(res).toHaveProperty("id"); /* means perfume is created */
       expect(res).toHaveProperty("name");
       expect(res).toHaveProperty("image");
+      // TODO: catch bug where image is not saved or is set to null
+      // TODO: Do integration testing instead of unit testing
     }),
     it("should delete a perfume", async () => {
       mockSession = {

@@ -12,7 +12,7 @@
     "test": "jest",
     "test:watch": "jest --watchAll --verbose",
     "prepare": "husky install",
-    "release": "release-it"
+    "release": "release-it --only-version"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
