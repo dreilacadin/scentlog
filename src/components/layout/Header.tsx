@@ -10,6 +10,8 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import ThemeToggle from "~/components/utils/ThemeToggle";
+import Link from "next/link";
+import { paths } from "~/lib/paths";
 
 const HEADER_HEIGHT = 60;
 
@@ -122,7 +124,9 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
   return (
     <Header height={HEADER_HEIGHT} className={classes.root} mb={16}>
       <Container className={classes.header}>
-        <span className="text-2xl font-bold tracking-wide">ScentLog</span>
+        <Link href={paths.home} className="text-2xl font-bold tracking-wide">
+          ScentLog
+        </Link>
         <Group spacing={5} className={classes.links}>
           <ThemeToggle />
           {items}

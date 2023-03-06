@@ -1,5 +1,4 @@
 import { Center, Container, Loader } from "@mantine/core";
-import React from "react";
 
 const AppSpinner = () => {
   return (

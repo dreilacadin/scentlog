@@ -1,4 +1,4 @@
-import { Avatar, Box, Container, Flex, Text } from "@mantine/core";
+import { Avatar, Box, Container, Flex, Text, Title } from "@mantine/core";
 import { signIn, signOut, useSession } from "next-auth/react";
 import PerfumeList from "~/components/perfume/PerfumeList";
 import AppSpinner from "~/components/spinners/AppSpinner";
@@ -9,16 +9,6 @@ const Home = () => {
   function handleSignInToDiscord() {
     signIn("discord").catch(console.log);
   }
-
-  // const createPerfume = api.perfume.createPerfume.useMutation();
-
-  // function callMutate() {
-  //   createPerfume.mutate({
-  //     name: "Y EDP",
-  //     brand: "YSL",
-  //     batchCode: "38W803M",
-  //   });
-  // }
 
   if (status === "loading") {
     return <AppSpinner />;
@@ -59,8 +49,11 @@ const Home = () => {
             </button>
           </Flex>
 
-          <div className="pt-6">
-            <PerfumeList />
+          <div className="pt-8">
+            <Title order={2} mb={16}>
+              My Perfumes:
+            </Title>
+            <PerfumeList userId={session.user.id} />
           </div>
         </>
       ) : (
