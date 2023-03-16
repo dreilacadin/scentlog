@@ -88,6 +88,8 @@ model Brand {
     name     String
     logo     String?
     perfumes Perfume[]
+
+    @@unique([name])
 }
 
 model Category {

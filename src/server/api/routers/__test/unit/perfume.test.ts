@@ -23,7 +23,7 @@ const caller = appRouter.createCaller({
   prisma: prismaMock,
 });
 
-describe("Perfume Router Tests", () => {
+describe("Perfume Router Unit Tests", () => {
   it("should get all the perfumes", async () => {
     const caller = appRouter.createCaller({
       session: null,

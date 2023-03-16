@@ -6,11 +6,12 @@
     "build": "next build",
     "dev": "next dev -p 4000",
     "prisma:studio": "prisma studio",
+    "prisma:studio-test": "dotenv -e .env.test prisma studio",
     "postinstall": "prisma generate",
     "lint": "next lint",
     "start": "next start",
     "test": "jest",
-    "test:watch": "jest --watchAll --verbose",
+    "test:watch": "DOTENV_CONFIG_PATH=.env.test jest --watchAll --verbose --setupFiles=dotenv/config & yarn prisma:studio-test",
     "prepare": "husky install",
     "release": "release-it --only-version"
   },
