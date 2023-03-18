@@ -1,22 +1,14 @@
 import {
-  type inferProcedureOutput,
   type inferProcedureInput,
+  type inferProcedureOutput,
 } from "@trpc/server";
+import cuid from "cuid";
 import { appRouter, type AppRouter } from "~/server/api/root";
 import { UserRole } from "~/server/auth";
-import cuid from "cuid";
-import { prismaMock } from "~/server/prismaMock";
-import { type Session } from "next-auth";
+import { MOCK_SESSION } from "~/tests/helpers/globals";
+import { prismaMock } from "~/tests/helpers/prismaMock";
 
-let mockSession: Session = {
-  user: {
-    id: cuid(),
-    name: "test user",
-    email: "test@email.com",
-    role: UserRole.user,
-  },
-  expires: new Date().toISOString(),
-};
+let mockSession = MOCK_SESSION;
 
 const caller = appRouter.createCaller({
   session: mockSession,
@@ -90,8 +82,6 @@ describe("Perfume Router Unit Tests", () => {
       expect(res).toHaveProperty("id"); /* means perfume is created */
       expect(res).toHaveProperty("name");
       expect(res).toHaveProperty("image");
-      // TODO: catch bug where image is not saved or is set to null
-      // TODO: Do integration testing instead of unit testing
     }),
     it("should delete a perfume", async () => {
       mockSession = {

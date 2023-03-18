@@ -77,8 +77,8 @@ model Perfume {
     category  Category[]
     logs      Log[]
     owners    User[]
-    brand     Brand      @relation(fields: [brandId], references: [id])
-    brandId   String     @unique
+    brand     Brand?     @relation(fields: [brandId], references: [id], onDelete: SetNull)
+    brandId   String?
 
     @@index([name])
 }

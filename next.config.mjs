@@ -21,7 +21,7 @@ const config = {
     defaultLocale: "en",
   },
   images: {
-    domains: ["fimgs.net"],
+    domains: ["fimgs.net", "loremflickr.com"],
   },
 };
 export default config;

@@ -56,17 +56,23 @@ export const perfumeRouter = createTRPCRouter({
           data: {
             name: input.name,
             brand: {
-              create: {
-                name: input.brand,
+              connectOrCreate: {
+                create: {
+                  name: input.brand,
+                },
+                where: {
+                  name: input.brand,
+                },
               },
             },
             batchCode: input.name,
             image: input.image,
             owners: {
-              connect: {
-                id: user.id,
-              },
+              connect: [{ id: user.id }],
             },
+          },
+          include: {
+            owners: true,
           },
         });
       }
@@ -76,11 +82,19 @@ export const perfumeRouter = createTRPCRouter({
         data: {
           name: input.name,
           brand: {
-            create: {
-              name: input.brand,
+            connectOrCreate: {
+              create: {
+                name: input.brand,
+              },
+              where: {
+                name: input.brand,
+              },
             },
           },
           batchCode: input.name,
+        },
+        include: {
+          owners: true,
         },
       });
     }),
