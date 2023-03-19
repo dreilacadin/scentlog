@@ -51,7 +51,7 @@ describe("Perfume Router Integration tests", () => {
     };
 
     await expect(caller.perfume.createPerfume(input)).rejects.toThrowError(
-      "UNAUTHORIZED"
+      /UNAUTHORIZED/
     );
   });
 });
