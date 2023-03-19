@@ -11,8 +11,6 @@ interface PerfumeCardProps {
 const PerfumeCard: React.FC<PerfumeCardProps> = ({ perfume }) => {
   if (!perfume) return null;
 
-  console.log(perfume);
-
   return (
     <Link
       href={paths.perfume.view.replace(":id", perfume.id)}

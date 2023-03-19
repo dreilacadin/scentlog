@@ -1,66 +1,55 @@
-import { Avatar, Box, Container, Flex, Text, Title } from "@mantine/core";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { ScrollArea, Tabs, type TabsValue, Title } from "@mantine/core";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
 import PerfumeList from "~/components/perfume/PerfumeList";
 import AppSpinner from "~/components/spinners/AppSpinner";
+import UserSession from "~/components/user/UserSession";
 
 const Home = () => {
   const { data: session, status } = useSession();
-
-  function handleSignInToDiscord() {
-    signIn("discord").catch(console.log);
-  }
+  const [activeTab, setActiveTab] = useState<TabsValue>("perfumes");
 
   if (status === "loading") {
     return <AppSpinner />;
   }
 
-  return (
-    <Container>
-      {session ? (
-        <>
-          <Flex align={"center"} justify={"space-between"} gap={14}>
-            <Flex align={"center"} gap={16}>
-              <div className="rounded-3xl border border-yellow-500">
-                <Avatar
-                  radius="xl"
-                  variant="outline"
-                  size="lg"
-                  color={"yellow"}
-                  src={session.user.image}
-                />
-              </div>
+  if (session) {
+    return (
+      <>
+        <UserSession />
+        <div className="pt-8">
+          <Tabs
+            value={activeTab}
+            onTabChange={(value) => setActiveTab(value)}
+            variant="pills"
+          >
+            <Tabs.List grow>
+              <Tabs.Tab value="perfumes">My Perfumes</Tabs.Tab>
+              <Tabs.Tab value="logs">My Logs</Tabs.Tab>
+            </Tabs.List>
+          </Tabs>
+        </div>
 
-              <Box>
-                {/* TODO: Make this dynamic depending on time of day */}
-                <Text fz="sm" c="dimmed">
-                  Good day
-                </Text>
-                <Text variant="gradient" fz="lg" fw="bold">
-                  {session.user.name}
-                </Text>
-              </Box>
-            </Flex>
-            <button
-              onClick={() => {
-                signOut().catch(console.log);
-              }}
-            >
-              Logout
-            </button>
-          </Flex>
-
+        {activeTab === "perfumes" ? (
           <div className="pt-8">
             <Title order={2} mb={16}>
               My Perfumes:
             </Title>
-            <PerfumeList userId={session.user.id} />
+
+            <ScrollArea h={520}>
+              <PerfumeList userId={session.user.id} />
+            </ScrollArea>
           </div>
-        </>
-      ) : (
-        <button onClick={handleSignInToDiscord}>Login with discord</button>
-      )}
-    </Container>
-  );
+        ) : (
+          <div className="pt-8">
+            <Title order={2} mb={16}>
+              My Logs:
+            </Title>
+          </div>
+        )}
+      </>
+    );
+  }
 };
 
 export default Home;

@@ -12,6 +12,7 @@ import { useDisclosure } from "@mantine/hooks";
 import ThemeToggle from "~/components/utils/ThemeToggle";
 import Link from "next/link";
 import { paths } from "~/lib/paths";
+import { signOut } from "next-auth/react";
 
 const HEADER_HEIGHT = 60;
 
@@ -32,6 +33,9 @@ const useStyles = createStyles((theme) => ({
     borderTopLeftRadius: 0,
     borderTopWidth: 0,
     overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    gap: "1rem",
 
     [theme.fn.largerThan("sm")]: {
       display: "none",
@@ -145,6 +149,15 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
               <div className="flex items-center justify-end gap-4">
                 <span>Theme</span>
                 <ThemeToggle />
+              </div>
+              <div className="flex justify-end">
+                <button
+                  onClick={() => {
+                    signOut().catch(console.log);
+                  }}
+                >
+                  Logout
+                </button>
               </div>
               {items}
             </Paper>
